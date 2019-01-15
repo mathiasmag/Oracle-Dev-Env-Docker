@@ -1,4 +1,4 @@
-# Oracle Development Environmenmt setup
+# Oracle Development Environment setup
 
 This repo sets up an Oracle development environment using:
 Oracle DB XE 18c
