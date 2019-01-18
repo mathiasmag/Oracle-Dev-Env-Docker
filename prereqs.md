@@ -13,7 +13,7 @@ Oracle Linux supports Docker CE even though it is built on Red Hat. Follow this 
 ## Get zip-files this project and Oracle Docker project.
 
 Go to thise prjects and click "clone or download" + "Download ZIP"
-- [Oracle Developement Environment (this)}(https://github.com/mathiasmag/Oracle-Dev-Env-Docker)
+- [Oracle Developement Environment (this)](https://github.com/mathiasmag/Oracle-Dev-Env-Docker)
 - [Oracle Docker Images](https://github.com/mathiasmag/Oracle-Dev-Env-Docker)
 
 ## Unzip both zip-files
