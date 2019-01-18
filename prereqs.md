@@ -24,4 +24,10 @@ Unzip them anywhere on your machine.
 
 Download these and place them in the root directory of the unzipped files for this project (Oracle Development Environment).
 
--
+Grab the latest version/update for each file within the version indicated below.
+
+- [Oracle XE 18c - Linux x64](https://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html)
+- [Oracle APEX 18](https://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html)
+- [Oracle SQLcl 18](https://www.oracle.com/technetwork/developer-tools/sqlcl/downloads/index.html)
+- [Java Version 8 - jre-8u<nnn>-linux-x64.tar.gz](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
+- [Oracle ORDS 18](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html)
