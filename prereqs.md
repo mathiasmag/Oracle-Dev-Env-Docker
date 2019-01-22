@@ -8,7 +8,7 @@ Installing docker is easy no matter what platform you are on. For platforms and 
 
 For Red Hat, follow their instructions. They do not install Docker CE, you'll get the older docker-engine. Though it is possible to install Docker CE from Cent OS if you do not need a configuration Red HAt will support.
 
-Oracle Linux install for docker-engine is explained on this [blog](https://blogs.oracle.com/virtualization/install-docker-on-oracle-linux-7-v2).
+Oracle Linux install for docker-engine is explained on this [blog](https://blogs.oracle.com/virtualization/install-docker-on-oracle-linux-7-v2). For the things we do here, the part at the end about logging on to the Oracle Container Registry can be skipped.
 
 ## Get zip-files this project and Oracle Docker project.
 
