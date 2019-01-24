@@ -23,7 +23,7 @@ wget -O ~/Downloads/dl.zip  https://github.com/mathiasmag/Oracle-Dev-Env-Docker/
 ```
 
 ###Manual steps
-Go to thise prjects and click "clone or download" + "Download ZIP"
+Go to thise projects and click "clone or download" + "Download ZIP"
 - [Oracle Developement Environment (this)](https://github.com/mathiasmag/Oracle-Dev-Env-Docker)
 - [Oracle Docker Images](https://github.com/oracle/docker-images)
 

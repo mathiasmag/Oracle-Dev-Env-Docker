@@ -47,12 +47,18 @@ if (( 0 == $(ls server-jre-8u*-linux-x64.tar.gz 2>/dev/null | wc -w) )); then
   exit
 fi
 
+if (( 0 == $(ls ords-18*.zip 2>/dev/null | wc -w) )); then
+  echo 'The Oracle Java JRE 8 installation zip-file needs to be present and located in the same directory as this script.'
+  exit
+fi
+
 echo 'Copying files'
 cp oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
 cp apex_*.zip OracleAPEX
 cp apex_*.zip OracleOrds
 cp server-jre-8u*-linux-x64.tar.gz $ORA_IMAGES_DIR/docker-images-master/OracleJava/java-8
-#mv  ords-18*.zip sqlcl-*.zip 
+cp ords-18*.zip  $ORA_IMAGES_DIR/docker-images-master/OracleRestDataServices/dockerfiles
+#mv   sqlcl-*.zip 
 
 echo 'Build oracle/database:18.4.0-xe'
 
@@ -87,16 +93,27 @@ if [ $(docker image ls -q oracle/serverjre:8 | wc -l) == '0' ]; then
     exit
 fi
 
-echo 'Build evilape/ords:18.3.0-w_images'
+echo 'Build oracle/serverjre:8'
 
-cd $SCRIPT_DIR/OracleOrds
+cd $ORA_IMAGES_DIR/docker-images-master/OracleRestDataServices/dockerfiles
 
-docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . >> buildall.log
+./buildDockerImage.sh >> buildall.log
 
-if [ $(docker image ls -q docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . | wc -l) == '0' ]; then
+if [ $(docker image ls -q oracle/restdataservices | wc -l) == '0' ]; then
     echo 'The build of Oracle ORDS did not succeed. Exiting.'
     exit
 fi
+
+#echo 'Build evilape/ords:18.3.0-w_images'
+
+#cd $SCRIPT_DIR/OracleOrds
+
+#docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . >> buildall.log
+
+#if [ $(docker image ls -q docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . | wc -l) == '0' ]; then
+#    echo 'The build of Oracle ORDS did not succeed. Exiting.'
+#    exit
+#fi
 
 #docker network create --driver bridge oracle_isolated_network
 
