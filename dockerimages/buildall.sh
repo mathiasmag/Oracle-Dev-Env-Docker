@@ -93,7 +93,7 @@ if [ $(docker image ls -q oracle/serverjre:8 | wc -l) == '0' ]; then
     exit
 fi
 
-echo 'Build oracle/serverjre:8'
+echo 'oracle/restdataservices'
 
 cd $ORA_IMAGES_DIR/docker-images-master/OracleRestDataServices/dockerfiles
 
@@ -104,17 +104,17 @@ if [ $(docker image ls -q oracle/restdataservices | wc -l) == '0' ]; then
     exit
 fi
 
-#echo 'Build evilape/ords:18.3.0-w_images'
+echo 'Build evilape/ords:18.3.0-w_images'
 
-#cd $SCRIPT_DIR/OracleOrds
+cd $SCRIPT_DIR/OracleOrds
 
-#docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . >> buildall.log
+docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . >> buildall.log
 
-#if [ $(docker image ls -q docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . | wc -l) == '0' ]; then
-#    echo 'The build of Oracle ORDS did not succeed. Exiting.'
-#    exit
-#fi
+if [ $(docker image ls -q docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . | wc -l) == '0' ]; then
+    echo 'The build of Oracle ORDS did not succeed. Exiting.'
+    exit
+fi
 
-#docker network create --driver bridge oracle_isolated_network
+docker network create --driver bridge oracle_isolated_network
 
 echo 'The End'
