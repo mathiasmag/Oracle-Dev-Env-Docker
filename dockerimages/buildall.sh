@@ -42,7 +42,7 @@ if (( 0 == $(ls apex_*.zip 2>/dev/null | wc -w) )); then
   exit
 fi
 
-if (( 0 == $(ls jre-8u*-linux-x64.tar.gz 2>/dev/null | wc -w) )); then
+if (( 0 == $(ls server-jre-8u*-linux-x64.tar.gz 2>/dev/null | wc -w) )); then
   echo 'The Oracle Java JRE 8 installation zip-file needs to be present and located in the same directory as this script.'
   exit
 fi
@@ -51,7 +51,7 @@ echo 'Copying files'
 cp oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
 cp apex_*.zip OracleAPEX
 cp apex_*.zip OracleOrds
-cp jre-8u*-linux-x64.tar.gz $ORA_IMAGES_DIR/docker-images-master/OracleJava/java-8
+cp server-jre-8u*-linux-x64.tar.gz $ORA_IMAGES_DIR/docker-images-master/OracleJava/java-8
 #mv  ords-18*.zip sqlcl-*.zip 
 
 echo 'Build oracle/database:18.4.0-xe'
