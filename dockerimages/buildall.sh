@@ -50,6 +50,7 @@ fi
 echo 'Copying files'
 cp oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
 cp apex_*.zip OracleAPEX
+cp apex_*.zip OracleOrds
 cp jre-8u*-linux-x64.tar.gz $ORA_IMAGES_DIR/docker-images-master/OracleJava/Java-8
 #mv  ords-18*.zip sqlcl-*.zip 
 
@@ -57,7 +58,7 @@ echo 'Build oracle/database:18.4.0-xe'
 
 # Build the Oracle XE 18.4.0 image
 cd $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles
-./buildDockerImage.sh -x -v 18.4.0 > run.log
+./buildDockerImage.sh -x -v 18.4.0 > buildall.log
 
 if [ $(docker image ls -q oracle/database:18.4.0-xe | wc -l) == '0' ]; then
     echo 'The build of Oracle XE did not succeed. Exiting.'
@@ -68,7 +69,7 @@ echo 'Build evilape/database:18.4.0-xe_w_apex'
 
 cd $SCRIPT_DIR/OracleAPEX
 
-docker build -t evilape/database:18.4.0-xe_w_apex -f Dockerfile . >> run.log
+docker build -t evilape/database:18.4.0-xe_w_apex -f Dockerfile . >> buildall.log
 
 if [ $(docker image ls -q evilape/database:18.4.0-xe_w_apex | wc -l) == '0' ]; then
     echo 'The build of Oracle XE did not succeed. Exiting.'
@@ -79,10 +80,21 @@ echo 'Build oracle/serverjre:8'
 
 cd $ORA_IMAGES_DIR/docker-images-master/OracleJava/Java-8
 
-docker build -t oracle/serverjre:8 .
+docker build -t oracle/serverjre:8 .>> buildall.log
 
 if [ $(docker image ls -q oracle/serverjre:8 | wc -l) == '0' ]; then
     echo 'The build of Oracle Java JRE 8 did not succeed. Exiting.'
+    exit
+fi
+
+echo 'Build evilape/ords:18.3.0-w_images'
+
+cd $SCRIPT_DIR/OracleOrds
+
+docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . >> buildall.log
+
+if [ $(docker image ls -q docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . | wc -l) == '0' ]; then
+    echo 'The build of Oracle ORDS did not succeed. Exiting.'
     exit
 fi
 

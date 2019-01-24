@@ -32,22 +32,21 @@ LABEL Maintainer="Mathias Magnusson <mathias.magnusson@evilape.eu>"
 USER root
 
 # Environment variables used by the build
-ENV APEX_IMAGE_HOME=/opt/oracle/product \
-    VER=18.2
-COPY apex_${VER}.zip /tmp
+ENV APEX_IMAGE_HOME=/opt/oracle/product
+COPY apex_*.zip /tmp
 RUN echo "START" && \
     echo "Next command: yum -y install unzip" && \
     yum -y install unzip && \
     echo "Next command: cd /tmp" && \
     cd /tmp && \
-    echo "Next command: unzip apex_${VER}.zip" && \
-    unzip apex_${VER}.zip && \
+    echo "Next command: unzip apex_*.zip" && \
+    unzip apex_*.zip && \
     echo "Next command: mv apex/images /opt/oracle/ords/doc_root/i" && \
     mv apex/images /opt/oracle/ords/doc_root/i && \
     echo "Next command: chown -R oracle:dba /opt/oracle/ords/doc_root/i" && \
     chown -R oracle:dba /opt/oracle/ords/doc_root/i && \
-    echo "Next command: rm /tmp/apex_${VER}.zip" && \
-    rm /tmp/apex_${VER}.zip  && \
+    echo "Next command: rm /tmp/apex_*.zip" && \
+    rm /tmp/apex_*.zip  && \
     echo "Next command: rm -rf /tmp/apex" && \
     rm -rf /tmp/apex  && \
     echo "DONE"
