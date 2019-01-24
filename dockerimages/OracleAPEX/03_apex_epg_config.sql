@@ -1,0 +1,3 @@
+--Behövs inte om bara ORDS
+--alter session set container=XEPDB1;
+--@apex_epg_config.sql /opt/oracle/product

@@ -1,0 +1,24 @@
+Create an image from Oracle to use, asdsumed to be the Oracle XE Docker 18c
+
+Use the OracleAPEX Dockerfile to extend Oracles image
+
+Run the image to create a container - OracleXE18c, now the database with APEX is available
+
+Build the java image from Oracle https://github.com/oracle/docker-images/tree/master/OracleJava
+
+Build the Rest Data Services from Oracle https://github.com/oracle/docker-images/tree/master/OracleRestDataServices
+
+Extend oracle/restdataservices:18.3.0 to have images loaded into .../i. Use the OracleOrds docker build for it.
+
+Start the container with:
+docker run --name OracleOrds183 \
+--network=oracle_isolated_network \
+-p 8888:8888 \
+-e ORACLE_HOST=OracleXE18c \
+-e ORACLE_PORT=1521 \
+-e ORACLE_SERVICE=XEPDB1 \
+-e ORACLE_PWD=EvilApe \
+-e ORDS_PWD=EvilApe \
+-v /home/mathias/dkr/oradata/OracleOrds183:/opt/oracle/ords/config/ords evilape/ords:18.3.0-w_images
+
+Now you can access apex on http://localhost:8888/ords

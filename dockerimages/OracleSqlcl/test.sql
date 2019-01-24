@@ -1,0 +1,1 @@
+select 'YES!' from dual;
