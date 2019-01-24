@@ -32,11 +32,22 @@ if [ ! -x "$(getenforce)" ]; then
 SCRIPT_DIR=$(pwd)
 ORA_IMAGES_DIR=$1
 
+if [ ! -f "oracle-database-xe-18c-1.0-1.x86_64.rpm" ]; then
+  echo 'The Oracle installation file for XE (oracle-database-xe-18c-1.0-1.x86_64.rpm) needs to be present and located in the same directory as this script.'
+  exit
+fi
+
 mv oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
 #mv apex_*.zip ords-18*.zip jre-8u*-linux-x64.tar.gz sqlcl-*.zip oracle-database-xe-18c-1.0-1.x86_64.rpm 
 
+# Build the Oracle XE 18.4.0 image
 cd $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles
 ./buildDockerImage.sh -x -v 18.4.0
+
+if [ $(docker image ls -q oracle/database:18.4.0-xe | wc -l) == '0' ]; then
+    echo 'The build of Oracle XE did not succeed. Exiting.'
+    exit
+fi
 
 cd $SCRIPT_DIR
 

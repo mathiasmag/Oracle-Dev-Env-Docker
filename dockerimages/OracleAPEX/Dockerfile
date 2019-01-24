@@ -29,9 +29,8 @@ FROM oracle/database:18.4.0-xe
 LABEL Maintainer="Mathias Magnusson <mathias.magnusson@evilape.eu>"
 
 # Environment variables used by the build
-ENV APEX_HOME=/opt/oracle/product \
-    VER=18.2
-COPY apex_${VER}.zip /tmp
+ENV APEX_HOME=/opt/oracle/product 
+COPY apex_*.zip /tmp
 COPY 0* /opt/oracle/scripts/setup/
 RUN echo "START" && \
     echo "Next command: yum -y install unzip" && \
@@ -40,12 +39,12 @@ RUN echo "START" && \
     mkdir -p $APEX_HOME && \
     echo "Next command: cd $APEX_HOME" && \
     cd $APEX_HOME && \
-    echo "Next command: unzip /tmp/apex_${VER}.zip" && \
-    unzip /tmp/apex_${VER}.zip && \
+    echo "Next command: unzip /tmp/apex_*.zip" && \
+    unzip /tmp/apex_*.zip && \
     echo "Next command: chown -R oracle:oinstall apex" && \
     chown -R oracle:oinstall apex && \
-    echo "Next command: rm /tmp/apex_${VER}.zip" && \
-    rm /tmp/apex_${VER}.zip  && \
+    echo "Next command: rm /tmp/apex_*.zip" && \
+    rm /tmp/apex_*.zip  && \
     echo "Next command: mv /opt/oracle/scripts/setup/01_install_apex.sql $APEX_HOME/apex" && \
     mv /opt/oracle/scripts/setup//01_install_apex.sql $APEX_HOME/apex && \
     echo "Next command: mv /opt/oracle/scripts/setup/04_install_apex.sql $APEX_HOME/apex" && \
