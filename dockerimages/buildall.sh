@@ -93,7 +93,7 @@ if [ $(docker image ls -q oracle/serverjre:8 | wc -l) == '0' ]; then
     exit
 fi
 
-echo 'oracle/restdataservices'
+echo 'Build oracle/restdataservices'
 
 cd $ORA_IMAGES_DIR/docker-images-master/OracleRestDataServices/dockerfiles
 

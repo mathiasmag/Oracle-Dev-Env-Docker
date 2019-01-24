@@ -11,3 +11,10 @@ Parameters:
 - Position 3 - Password to be used for all created users.
 
 NOTE: It writes all standard output to buildall.log. It only shows each steps it starts as output to the user. Tail that file if you want to follow how the process goes.
+
+Warnings and errors written to standard error shown up. There should be none. With known exception of these that shows up twice.
+
+```
+WARNING: bridge-nf-call-iptables is disabled
+WARNING: bridge-nf-call-ip6tables is disabled
+```
