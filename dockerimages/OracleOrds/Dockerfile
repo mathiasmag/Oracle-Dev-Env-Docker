@@ -16,7 +16,7 @@
 # HOW TO BUILD THIS IMAGE
 # -----------------------
 # Put the downloaded file in the same directory as this Dockerfile
-#   The Oracles image for Rest DAta Services  will need to be created before thsi image is created. 
+#   The Oracles image for Rest DAta Services  will need to be created before this image is created. 
 # Run: 
 #      $ docker build -t evilape/ords:18.3.0-w_images -f Dockerfile .
 #

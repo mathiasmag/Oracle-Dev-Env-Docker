@@ -51,7 +51,7 @@ echo 'Copying files'
 cp oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
 cp apex_*.zip OracleAPEX
 cp apex_*.zip OracleOrds
-cp jre-8u*-linux-x64.tar.gz $ORA_IMAGES_DIR/docker-images-master/OracleJava/Java-8
+cp jre-8u*-linux-x64.tar.gz $ORA_IMAGES_DIR/docker-images-master/OracleJava/java-8
 #mv  ords-18*.zip sqlcl-*.zip 
 
 echo 'Build oracle/database:18.4.0-xe'
@@ -78,7 +78,7 @@ fi
 
 echo 'Build oracle/serverjre:8'
 
-cd $ORA_IMAGES_DIR/docker-images-master/OracleJava/Java-8
+cd $ORA_IMAGES_DIR/docker-images-master/OracleJava/java-8
 
 docker build -t oracle/serverjre:8 .>> buildall.log
 
