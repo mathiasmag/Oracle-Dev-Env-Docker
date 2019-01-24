@@ -37,8 +37,14 @@ if [ ! -f "oracle-database-xe-18c-1.0-1.x86_64.rpm" ]; then
   exit
 fi
 
-mv oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
-#mv apex_*.zip ords-18*.zip jre-8u*-linux-x64.tar.gz sqlcl-*.zip oracle-database-xe-18c-1.0-1.x86_64.rpm 
+if [ ! -f "apex_*.zip" ]; then
+  echo 'The Oracle APEX installation zip-file needs to be present and located in the same directory as this script.'
+  exit
+fi
+
+cp oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
+cp apex_*.zip OracleAPEX
+#mv  ords-18*.zip jre-8u*-linux-x64.tar.gz sqlcl-*.zip oracle-database-xe-18c-1.0-1.x86_64.rpm 
 
 # Build the Oracle XE 18.4.0 image
 cd $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles
@@ -49,7 +55,9 @@ if [ $(docker image ls -q oracle/database:18.4.0-xe | wc -l) == '0' ]; then
     exit
 fi
 
-cd $SCRIPT_DIR
+cd $SCRIPT_DIR/OracleAPEX
+
+docker build -t evilape/database:18.4.0-xe_w_apex -f Dockerfile .
 
 #docker network create --driver bridge oracle_isolated_network
 
