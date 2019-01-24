@@ -23,7 +23,7 @@
 #
 # Pull base image
 # ---------------
-FROM oracle/restdataservices:18.3.0
+FROM oracle/restdataservices
 
 # Maintainer
 # ----------
