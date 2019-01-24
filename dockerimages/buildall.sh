@@ -97,7 +97,7 @@ echo 'Build oracle/serverjre:8'
 
 cd $ORA_IMAGES_DIR/docker-images-master/OracleRestDataServices/dockerfiles
 
-./buildDockerImage.sh >> buildall.log
+./buildDockerImage.sh -i >> buildall.log
 
 if [ $(docker image ls -q oracle/restdataservices | wc -l) == '0' ]; then
     echo 'The build of Oracle ORDS did not succeed. Exiting.'
