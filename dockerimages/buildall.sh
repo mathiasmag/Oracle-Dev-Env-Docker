@@ -10,7 +10,7 @@ if [ ! -d "$2" ]; then
 fi
 
 if (( ! $(ls -A $2| wc -l) == 0)); then
-  echo 'Parameter 2 needs to be an empty directory.'
+  echo 'Parameter 2 needs to be an empty directory. It is where you want datafiles and ORDS-config to be stored.'
   exit
 fi
 
@@ -23,7 +23,7 @@ fi
 if [ ! -x "$(getenforce)" ]; then
   if [ $(getenforce) == 'Enforcing' ]; then
     echo 'SELINUX is active. Disable it temporarily with "setenforce Permissive".'
-    echo 'Edit /etc/selinux/config to change its setting. Or configure it to work with Oracle. Your coice...'
+    echo 'Edit /etc/selinux/config to change its setting. Or configure it to work with Oracle. Your choice...'
     exit
   fi
  fi
@@ -32,10 +32,13 @@ if [ ! -x "$(getenforce)" ]; then
 SCRIPT_DIR=$(pwd)
 ORA_IMAGES_DIR=$1
 
-#mv oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
+mv oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
 #mv apex_*.zip ords-18*.zip jre-8u*-linux-x64.tar.gz sqlcl-*.zip oracle-database-xe-18c-1.0-1.x86_64.rpm 
 
+cd $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles
+./buildDockerImage.sh -x -v 18.4.0
 
+cd $SCRIPT_DIR
 
 #docker network create --driver bridge oracle_isolated_network
 

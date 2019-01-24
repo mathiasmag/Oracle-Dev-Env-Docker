@@ -14,21 +14,26 @@ Oracle Linux install for docker-engine is explained on this [blog](https://blogs
 
 Either use these commands to download and unzip into the directory you execute them from or follow the steps below to do it manually.
 ```
+mkdir oracle
+mkdir evilape
+cd oracle
 wget -O ~/Downloads/dl.zip  https://github.com/oracle/docker-images/archive/master.zip;unzip ~/Downloads/dl.zip;rm ~/Downloads/dl.zip
+cd ../evilape
 wget -O ~/Downloads/dl.zip  https://github.com/mathiasmag/Oracle-Dev-Env-Docker/archive/master.zip;unzip ~/Downloads/dl.zip;rm ~/Downloads/dl.zip
 ```
 
+###Manual steps
 Go to thise prjects and click "clone or download" + "Download ZIP"
 - [Oracle Developement Environment (this)](https://github.com/mathiasmag/Oracle-Dev-Env-Docker)
 - [Oracle Docker Images](https://github.com/oracle/docker-images)
 
-## Unzip both zip-files
+#### Unzip both zip-files
 
 Unzip them anywhere on your machine.
 
 ## Download necessary files for the builds
 
-Download these and place them in the root directory of the unzipped files for this project (Oracle Development Environment).
+Download these and place them in the dockerfiles directory of the unzipped files for this project (Oracle Development Environment).
 
 Grab the latest version/update for each file within the version indicated below.
 
