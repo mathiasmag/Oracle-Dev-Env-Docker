@@ -104,7 +104,7 @@ if [ $(docker image ls -q oracle/restdataservices | wc -l) == '0' ]; then
     exit
 fi
 
-echo 'Build evilape/ords:18.3.0-w_images'
+echo 'Build evilape/ords:{VER}-w_images'
 
 cd $SCRIPT_DIR/OracleOrds
 
@@ -115,7 +115,7 @@ RET_VER=$(docker image ls --format "{{.Tag}}" --filter "since=evilape/database:1
 
 docker build -t evilape/ords:18.3.0-w_images -f Dockerfile --build-arg ORDS_VER=$RET_VER . >> buildall.log
 
-if [ $(docker image ls -q docker build -t evilape/ords:18.3.0-w_images -f Dockerfile . | wc -l) == '0' ]; then
+if [ $(docker image ls -q evilape/ords:${RET_VER}-w_images | wc -l) == '0' ]; then
     echo 'The build of Oracle ORDS did not succeed. Exiting.'
     exit
 fi
