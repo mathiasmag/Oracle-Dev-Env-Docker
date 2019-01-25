@@ -115,7 +115,7 @@ RET_VER=$(ls sqlcl*.zip|cut -f2 -d-|cut -f1-3 -d.)
 
 echo "Build evilape/sqlcl:${RET_VER}"
 
-docker build -t evilape/sqlcl:${RET_VER} --build_arg SQLCL_VER=${RET_VER} . >> $SCRIPT_DIR/buildall.log
+docker build -t evilape/sqlcl:${RET_VER} --build-arg SQLCL_VER=${RET_VER} . >> $SCRIPT_DIR/buildall.log
 
 if [ $(docker image ls -q evilape/sqlcl:${RET_VER} | wc -l) == '0' ]; then
     echo 'The build of Oracle SQLcl did not succeed. Exiting.'
