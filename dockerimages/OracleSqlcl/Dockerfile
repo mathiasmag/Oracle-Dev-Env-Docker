@@ -18,6 +18,7 @@
 # Run: 
 #      $ docker build -t oracle/database:18.4.0-xe -f Dockerfile.xe .
 #
+ARG     SQLCL_VER
 #
 # Pull base image
 # ---------------
@@ -25,11 +26,10 @@ FROM oraclelinux:7-slim
 
 # Maintainer
 # ----------
-MAINTAINER Mathias Magnusson <mathias.magnusson@evilape.eu>
+LABEL Maintainer="Mathias Magnusson <mathias.magnusson@evilape.eu>"
 
 # Environment variables used by the build
 ENV ORACLE_HOME=/opt/oracle/product \
-    VER=18.3 \
     SOURCEDIR=/source
 COPY sqlcl* /tmp
 RUN yum -y install unzip && \
@@ -37,7 +37,7 @@ RUN yum -y install unzip && \
     mkdir -p $ORACLE_HOME && \
     mkdir -p $SOURCEDIR && \
     cd $ORACLE_HOME && \
-    unzip /tmp/sqlcl-${VER}*
+    unzip /tmp/sqlcl-${SQLCL_VER}*
 ENTRYPOINT ["/opt/oracle/product/sqlcl/bin/sql"]
 CMD ["-h"]
 #CMD tail -f /dev/null
