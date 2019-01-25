@@ -47,7 +47,7 @@ cp apex_*.zip OracleAPEX
 cp apex_*.zip OracleOrds
 cp server-jre-8u*-linux-x64.tar.gz $ORA_IMAGES_DIR/docker-images-master/OracleJava/java-8
 cp ords-18*.zip  $ORA_IMAGES_DIR/docker-images-master/OracleRestDataServices/dockerfiles
-cp sqlcl-18*.zip $OracleSqlcl
+cp sqlcl-18*.zip OracleSqlcl
 
 echo 'Build oracle/database:18.4.0-xe'
 
