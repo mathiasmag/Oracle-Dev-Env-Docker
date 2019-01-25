@@ -113,7 +113,7 @@ cd $SCRIPT_DIR/OracleOrds
 #It is needed as Oracle tags their image based on the version in the install file. This is done to make it work with future versions of the install file.
 RET_VER=$(docker image ls --format "{{.Tag}}" --filter "since=evilape/database:18.4.0-xe_w_apex" oracle/restdataservices|sort -r|head -1)
 
-docker build -t evilape/ords:18.3.0-w_images -f Dockerfile --build-arg ORDS_VER=$RET_VER . >> buildall.log
+docker build -t evilape/ords:${RET_VER}-w_images -f Dockerfile --build-arg ORDS_VER=$RET_VER . >> buildall.log
 
 if [ $(docker image ls -q evilape/ords:${RET_VER}-w_images | wc -l) == '0' ]; then
     echo 'The build of Oracle ORDS did not succeed. Exiting.'
