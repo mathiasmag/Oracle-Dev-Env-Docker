@@ -21,9 +21,10 @@
 #      $ docker build -t evilape/ords:18.3.0-w_images -f Dockerfile .
 #
 #
+ARG ORDS_VER
 # Pull base image
 # ---------------
-FROM oracle/restdataservices
+FROM oracle/restdataservices:$ORDS_VER
 
 # Maintainer
 # ----------
