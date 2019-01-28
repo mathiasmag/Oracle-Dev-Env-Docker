@@ -45,16 +45,30 @@ ORDS_VOLUME=$VOLUME_BASE/ords
 mkdir $DB_VOLUME
 chmod 777 $DB_VOLUME
 
+echo 'Starting and creating database with image evilape/database:18.4.0-xe_w_apex'
+
 #1521 Oracle Listener
 #5500 OEM Express
 #characterset is hardcoded to AL32UTF8 as it allows use of non UTF8 PDBs if needed.
 docker run --name OracleXE18c \
-           -d \
            -p $LISTENER_PORT:1521 \
            -p $OEM_PORT:5500 \
            -e ORACLE_PWD=$PASSWORD \
            -e ORACLE_CHARACTERSET=AL32UTF8 \
            -v $DB_VOLUME/OracleXE18c:/opt/oracle/oradata \
            --network=$NETWORK_NAME \
-           evilape/database:18.4.0-xe_w_apex > $SCRIPT_DIR/createandstartall.log
+           evilape/database:18.4.0-xe_w_apex > $SCRIPT_DIR/createandstartall.log &
+
+echo 'Waiting foir database creation to complete...'
+
+while
+do
+  sleep 5
+  grep 'DATABASE IS READY TO USE!' $SCRIPT_DIR/createandstartall.log
+  if (( $? = 0 )) ; then
+    break
+  fi
+done
+
+echo 'Database has been successfully created.'
 
