@@ -64,7 +64,7 @@ echo 'Waiting foir database creation to complete...'
 while true ; do
   sleep 5
   grep 'DATABASE IS READY TO USE!' $SCRIPT_DIR/createandstartall.log
-  if (( $? = 0 )) ; then
+  if (( $? == 0 )) ; then
     break
   fi
 done
