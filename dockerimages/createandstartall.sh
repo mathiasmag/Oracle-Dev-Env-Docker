@@ -3,7 +3,7 @@
 junk=$(docker network inspect $1 2>&1 >/dev/null)
 #Create the docker network for the containers unless it already exists
 if (( ! $? == 0 )); then
-  docker network create --driver bridge oracle_isolated_network
+  docker network create --driver bridge $1 > /dev/null
 fi
 
 if [ ! -d "$2" ]; then
@@ -32,16 +32,30 @@ if ! [[ $5 =~ ^[0-9]+$ ]] ; then
    exit
 fi
 
-mkdir $2/OracleXE18c
+SCRIPT_DIR=$(pwd)
+NETWORK_NAME=$1
+VOLUME_BASE=$2
+PASSWORD=$3
+LISTENER_PORT=$4
+OEM_PORT=$5
+
+DB_VOLUME=$VOLUME_BASE/OracleXE18c
+ORDS_VOLUME=$VOLUME_BASE/ords
+
+mkdir $DB_VOLUME
+chmod 777 $DB_VOLUME
+chown 54321:54321 $DB_VOLUME
 
 #1521 Oracle Listener
 #5500 OEM Express
 #characterset is hardcoded to AL32UTF8 as it allows use of non UTF8 PDBs if needed.
 docker run --name OracleXE18c \
-           -p $4:1521 \
-           -p $5:5500 \
-           -e ORACLE_PWD=$3 \
+           -d \
+           -p $LISTENER_PORT:1521 \
+           -p $OEM_PORT:5500 \
+           -e ORACLE_PWD=$PASSWORD \
            -e ORACLE_CHARACTERSET=AL32UTF8 \
-           -v $2/OracleXE18c:/opt/oracle/oradata \
-           --network=$1 \
-           evilape/database:18.4.0-xe_w_apex
+           -v $DB_VOLUME/OracleXE18c:/opt/oracle/oradata \
+           --network=$NETWORK_NAME \
+           evilape/database:18.4.0-xe_w_apex > $SCRIPT_DIR/createandstartall.log
+
