@@ -30,6 +30,7 @@ Parameters:
 - Position 3 - Password to be used for all created users.
 - Position 4 - Port to map traffic to Oracle listener to. It is is 1521 inside the container.
 - Position 5 - Port to map traffic to OEM Express to. It is is 5500 inside the container.
+- Position 6 - Port to map traffic to ORDS. It is is 8888 inside the container.
 
 It is often easiest to use the same port on your system as is being used in the containers. Unless you want to set up many parallell environments on your system.
 

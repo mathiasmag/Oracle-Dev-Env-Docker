@@ -32,12 +32,18 @@ if ! [[ $5 =~ ^[0-9]+$ ]] ; then
    exit
 fi
 
+if ! [[ $6 =~ ^[0-9]+$ ]] ; then
+   echo "Parameter 6 should be an integer. It is the port to map 8888 in the ORDS container to."
+   exit
+fi
+
 SCRIPT_DIR=$(pwd)
 NETWORK_NAME=$1
 VOLUME_BASE=$2
 PASSWORD=$3
 LISTENER_PORT=$4
 OEM_PORT=$5
+ORDS_PORT=$6
 
 DB_VOLUME=$VOLUME_BASE/OracleXE18c
 ORDS_VOLUME=$VOLUME_BASE/ords
@@ -59,7 +65,7 @@ docker run --name OracleXE18c \
            --network=$NETWORK_NAME \
            evilape/database:18.4.0-xe_w_apex > $SCRIPT_DIR/createandstartall.log &
 
-echo 'Waiting foir database creation to complete...'
+echo 'Waiting for database creation to complete...'
 
 while true ; do
   sleep 5
@@ -71,3 +77,24 @@ done
 
 echo 'Database has been successfully created.'
 
+exit
+
+#Translation - List all images named evilape/ords that has been created since the database image just created was built. For those, only list the tag.
+#Then sort and grab the first one, but they are here just in case. From that we keep just the version number.
+#It is needed as Oracle tags their image based on the version in the install file. This is done to make it work with future versions of the install file.
+#It is assumed you want to use the highest version of the images you have.
+RET_VER=$(docker image ls --format "{{.Tag}}" --filter "since=evilape/database:18.4.0-xe_w_apex" evilape/ords|sort -r|head -1|cut -f1 -d-)
+
+# Extract the three main digits for version. If it is 18.4.0, return 184.
+VER_SUFFIX=$(echo $RET_VER|cut -f1,2 -d.|sed s/\\.//g)
+
+docker run --name OracleOrds${VER_SUFFIX} \
+           --network=$NETWORK_NAME \
+           -p $ORDS_PORT:8888 \
+           -e ORACLE_HOST=OracleXE18c \
+           -e ORACLE_PORT=$LISTENER_PORT> \
+           -e ORACLE_SERVICE=XEPDB1 \
+           -e ORACLE_PWD=$PASSWORD \
+           -e ORDS_PWD=$PASSWORD \
+           -v $ORDS_VOLUME:/opt/oracle/ords/config/ords \
+           evilape/ords:${RET_VER}-w_images
