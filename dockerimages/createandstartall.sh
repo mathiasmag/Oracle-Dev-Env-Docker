@@ -44,7 +44,6 @@ ORDS_VOLUME=$VOLUME_BASE/ords
 
 mkdir $DB_VOLUME
 chmod 777 $DB_VOLUME
-chown 54321:54321 $DB_VOLUME
 
 #1521 Oracle Listener
 #5500 OEM Express
