@@ -55,14 +55,13 @@ docker run --name OracleXE18c \
            -p $OEM_PORT:5500 \
            -e ORACLE_PWD=$PASSWORD \
            -e ORACLE_CHARACTERSET=AL32UTF8 \
-           -v $DB_VOLUME/OracleXE18c:/opt/oracle/oradata \
+           -v $DB_VOLUME:/opt/oracle/oradata \
            --network=$NETWORK_NAME \
            evilape/database:18.4.0-xe_w_apex > $SCRIPT_DIR/createandstartall.log &
 
 echo 'Waiting foir database creation to complete...'
 
-while
-do
+while true ; do
   sleep 5
   grep 'DATABASE IS READY TO USE!' $SCRIPT_DIR/createandstartall.log
   if (( $? = 0 )) ; then
