@@ -32,6 +32,9 @@ Parameters:
 - Position 5 - Port to map traffic to OEM Express to. It is is 5500 inside the container.
 - Position 6 - Port to map traffic to ORDS. It is is 8888 inside the container.
 
+For example.
+$ ./createandstartall.sh oracle_nw ~/dkr_data/ EvilApe 1521 5500 8888
+
 It is often easiest to use the same port on your system as is being used in the containers. Unless you want to set up many parallell environments on your system.
 
 NOTE: Currently the certificate presented by OEM is not allowed by Firefox.
