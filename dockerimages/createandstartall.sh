@@ -11,10 +11,10 @@ if [ ! -d "$2" ]; then
   exit
 fi
 
-#if (( ! $(ls -A $2| wc -l) == 0)); then
-#  echo 'Parameter 2 needs to be an empty directory. It is where you want datafiles and ORDS-config to be stored.'
-#  exit
-#fi
+if (( ! $(ls -A $2| wc -l) == 0)); then
+  echo 'Parameter 2 needs to be an empty directory. It is where you want datafiles and ORDS-config to be stored.'
+  exit
+fi
 
 if (( ${#3} < 4)); then
   echo 'Parameter 3 needs to be a password of at least 4 characters.'
@@ -48,22 +48,22 @@ ORDS_PORT=$6
 DB_VOLUME=$VOLUME_BASE/OracleXE18c
 ORDS_VOLUME=$VOLUME_BASE/ords
 
-#mkdir $DB_VOLUME
-#chmod 777 $DB_VOLUME
+mkdir $DB_VOLUME
+chmod 777 $DB_VOLUME
 
 echo 'Starting and creating database with image evilape/database:18.4.0-xe_w_apex'
 
 #1521 Oracle Listener
 #5500 OEM Express
 #characterset is hardcoded to AL32UTF8 as it allows use of non UTF8 PDBs if needed.
-#docker run --name OracleXE18c \
-#           -p $LISTENER_PORT:1521 \
-#           -p $OEM_PORT:5500 \
-#           -e ORACLE_PWD=$PASSWORD \
-#           -e ORACLE_CHARACTERSET=AL32UTF8 \
-#           -v $DB_VOLUME:/opt/oracle/oradata \
-#           --network=$NETWORK_NAME \
-#           evilape/database:18.4.0-xe_w_apex > $SCRIPT_DIR/createandstartall.log &
+docker run --name OracleXE18c \
+           -p $LISTENER_PORT:1521 \
+           -p $OEM_PORT:5500 \
+           -e ORACLE_PWD=$PASSWORD \
+           -e ORACLE_CHARACTERSET=AL32UTF8 \
+           -v $DB_VOLUME:/opt/oracle/oradata \
+           --network=$NETWORK_NAME \
+           evilape/database:18.4.0-xe_w_apex > $SCRIPT_DIR/createandstartall.log &
 
 echo 'Waiting for database creation to complete...'
 
@@ -95,4 +95,16 @@ docker run --name OracleOrds${VER_SUFFIX} \
            -e ORACLE_PWD=$PASSWORD \
            -e ORDS_PWD=$PASSWORD \
            -v $ORDS_VOLUME:/opt/oracle/ords/config/ords \
-           evilape/ords:${RET_VER}-w_images
+           evilape/ords:${RET_VER}-w_images > $SCRIPT_DIR/createandstartall.log &
+
+echo 'Waiting for ORDS creation to complete...'
+
+while true ; do
+  sleep 5
+  grep 'INFO:oejs.Server:main: Started' $SCRIPT_DIR/createandstartall.log
+  if (( $? == 0 )) ; then
+    break
+  fi
+done
+
+echo 'ORDS container has been successfully created.'
