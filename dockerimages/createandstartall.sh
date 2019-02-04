@@ -90,7 +90,7 @@ docker run --name OracleOrds${VER_SUFFIX} \
            --network=$NETWORK_NAME \
            -p $ORDS_PORT:8888 \
            -e ORACLE_HOST=OracleXE18c \
-           -e ORACLE_PORT=$LISTENER_PORT> \
+           -e ORACLE_PORT=$LISTENER_PORT \
            -e ORACLE_SERVICE=XEPDB1 \
            -e ORACLE_PWD=$PASSWORD \
            -e ORDS_PWD=$PASSWORD \
