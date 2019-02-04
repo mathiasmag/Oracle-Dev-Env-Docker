@@ -48,22 +48,22 @@ ORDS_PORT=$6
 DB_VOLUME=$VOLUME_BASE/OracleXE18c
 ORDS_VOLUME=$VOLUME_BASE/ords
 
-mkdir $DB_VOLUME
-chmod 777 $DB_VOLUME
+#mkdir $DB_VOLUME
+#chmod 777 $DB_VOLUME
 
 echo 'Starting and creating database with image evilape/database:18.4.0-xe_w_apex'
 
 #1521 Oracle Listener
 #5500 OEM Express
 #characterset is hardcoded to AL32UTF8 as it allows use of non UTF8 PDBs if needed.
-docker run --name OracleXE18c \
-           -p $LISTENER_PORT:1521 \
-           -p $OEM_PORT:5500 \
-           -e ORACLE_PWD=$PASSWORD \
-           -e ORACLE_CHARACTERSET=AL32UTF8 \
-           -v $DB_VOLUME:/opt/oracle/oradata \
-           --network=$NETWORK_NAME \
-           evilape/database:18.4.0-xe_w_apex > $SCRIPT_DIR/createandstartall.log &
+#docker run --name OracleXE18c \
+#           -p $LISTENER_PORT:1521 \
+#           -p $OEM_PORT:5500 \
+#           -e ORACLE_PWD=$PASSWORD \
+#           -e ORACLE_CHARACTERSET=AL32UTF8 \
+#           -v $DB_VOLUME:/opt/oracle/oradata \
+#           --network=$NETWORK_NAME \
+#           evilape/database:18.4.0-xe_w_apex > $SCRIPT_DIR/createandstartall.log &
 
 echo 'Waiting for database creation to complete...'
 
@@ -76,8 +76,6 @@ while true ; do
 done
 
 echo 'Database has been successfully created.'
-
-exit
 
 #Translation - List all images named evilape/ords that has been created since the database image just created was built. For those, only list the tag.
 #Then sort and grab the first one, but they are here just in case. From that we keep just the version number.
