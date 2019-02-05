@@ -52,7 +52,7 @@ echo "    $ORDS_VOLUME"
 echo
 echo 'NOTE: The volumes will not be removed by the script, you will be asked to do that if you want to remove database files and ORDS-config'
 echo
-read -p ' Do you want to contine and remove all of the above? (Y/N)' continue_flg
+read -p 'Do you want to contine and remove all of the above? (Y/N)' continue_flg
 if [[ $continue_flg != 'Y' ]]; then
   echo 'Aborting removal per user request'
   exit
@@ -60,18 +60,20 @@ fi
 
 echo 'Removal continues per user request'
 
-docker container rm $ORDS_CONTAINER
-docker container rm $DB_CONTAINER
+docker container stop $ORDS_CONTAINER > /dev/null
+docker container stop $DB_CONTAINER   > /dev/null
+docker container rm $ORDS_CONTAINER   > /dev/null
+docker container rm $DB_CONTAINER     > /dev/null
 
-docker image rm $ORACLE_LINUX_IMAGE
-docker image rm $ORACLE_ORDS_IMAGE
-docker image rm $ORACLE_JRE_IMAGE
-docker image rm $ORACLE_DB_IMAGE
-docker image rm $EVILAPE_SQLCL_IMAGE
-docker image rm $EVILAPE_ORDS_IMAGE
-docker image rm $EVILAPE_DB_IMAGE
+docker image rm $EVILAPE_SQLCL_IMAGE  > /dev/null
+docker image rm $EVILAPE_ORDS_IMAGE   > /dev/null
+docker image rm $EVILAPE_DB_IMAGE     > /dev/null
+docker image rm $ORACLE_ORDS_IMAGE    > /dev/null
+docker image rm $ORACLE_JRE_IMAGE     > /dev/null
+docker image rm $ORACLE_DB_IMAGE      > /dev/null
+docker image rm $ORACLE_LINUX_IMAGE   > /dev/null
 
-docker network rm $NETWORK
+docker network rm $NETWORK            > /dev/null
 
 if (( 0 == $(docker container ls $ORDS_CONTAINER|wc -l) )); then
   echo "Container $ORDS_CONTAINER has been removed"
