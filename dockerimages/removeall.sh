@@ -5,7 +5,7 @@ if (( 1 < $(docker container ls --filter NAME=OracleOrds --format "{{.Names}}" |
 fi
 
 #docker container inspect OracleOrds184|grep Source|cut -f2 -d:|cut -f2 -d\"
-NETWORK=$docker container inspect OracleOrds184|grep NetworkMode|cut -f2 -d:|cut -f2 -d\")
+NETWORK=$(docker container inspect OracleOrds184|grep NetworkMode|cut -f2 -d:|cut -f2 -d\")
 ORDS_CONTAINER=$(docker container ls --filter NAME=OracleOrds --format "{{.Names}}")
 DB_CONTAINER=$(docker container ls --filter NAME=OracleXE18c --format "{{.Names}}")
 ORACLE_LINUX_IMAGE=$(docker image ls -q oraclelinux)
