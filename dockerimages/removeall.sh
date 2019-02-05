@@ -52,7 +52,7 @@ echo "    $ORDS_VOLUME"
 echo
 echo 'NOTE: The volumes will not be removed by the script, you will be asked to do that if you want to remove database files and ORDS-config'
 echo
-read -p 'Do you want to contine and remove all of the above? (Y/N)' continue_flg
+read -p 'Do you want to contine and remove all of the above? (Y/N) ' continue_flg
 if [[ $continue_flg != 'Y' ]]; then
   echo 'Aborting removal per user request'
   exit

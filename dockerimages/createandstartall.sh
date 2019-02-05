@@ -50,6 +50,8 @@ ORDS_VOLUME=$VOLUME_BASE/ords
 
 mkdir $DB_VOLUME
 chmod 777 $DB_VOLUME
+mkdir $ORDS_VOLUME
+chmod 777 $ORDS_VOLUME
 
 echo 'Starting and creating database with image evilape/database:18.4.0-xe_w_apex'
 
