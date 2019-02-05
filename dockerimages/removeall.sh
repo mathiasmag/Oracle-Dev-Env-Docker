@@ -1,5 +1,5 @@
 #!/usr/bin/sh
-if (( 1 < $(docker container ls --filter NAME=OracleOrds --format "{{.Names}}" | wc -l); then
+if (( 1 < $(docker container ls --filter NAME=OracleOrds --format "{{.Names}}" | wc -l) )); then
   echo 'More than one coantainer for ORDS found. Not supported removal.'
   exit
 fi
