@@ -4,10 +4,11 @@ if (( 1 < $(docker container ls --filter NAME=OracleOrds --format "{{.Names}}" |
   exit
 fi
 
-#docker container inspect OracleOrds184|grep Source|cut -f2 -d:|cut -f2 -d\"
-NETWORK=$(docker container inspect OracleOrds184|grep NetworkMode|cut -f2 -d:|cut -f2 -d\")
 ORDS_CONTAINER=$(docker container ls --filter NAME=OracleOrds --format "{{.Names}}")
 DB_CONTAINER=$(docker container ls --filter NAME=OracleXE18c --format "{{.Names}}")
+
+NETWORK=$(docker container inspect $ORDS_CONTAINER|grep NetworkMode|cut -f2 -d:|cut -f2 -d\")
+
 ORACLE_LINUX_IMAGE=$(docker image ls -q oraclelinux)
 ORACLE_LINUX_IMAGE_NAME=$(docker image ls --format "{{.Repository}}:{{.Tag}}" oraclelinux)
 ORACLE_ORDS_IMAGE=$(docker image ls -q oracle/restdataservices)
@@ -23,6 +24,9 @@ EVILAPE_ORDS_IMAGE_NAME=$(docker image ls --format "{{.Repository}}:{{.Tag}}" ev
 EVILAPE_DB_IMAGE=$(docker image ls -q evilape/database)
 EVILAPE_DB_IMAGE_NAME=$(docker image ls --format "{{.Repository}}:{{.Tag}}" evilape/database)
 
+ORDS_VOLUME=$(docker container inspect $ORDS_CONTAINER|grep Source|cut -f2 -d:|cut -f2 -d\")
+DB_VOLUME=$(docker container inspect $DB_CONTAINER|grep Source|cut -f2 -d:|cut -f2 -d\")
+
 echo 'All components of the development environment will now be removed'
 echo
 echo 'That includes the following:'
@@ -30,8 +34,8 @@ echo '  Network:'
 echo "    $NETWORK"
 echo
 echo '  Containers:'
-echo '    $ORDS_CONTAINER'
-echo '    $DB_CONTAINER'
+echo "    $ORDS_CONTAINER"
+echo "    $DB_CONTAINER"
 echo
 echo '  Images:'
 echo "    $ORACLE_LINUX_IMAGE_NAME"
@@ -41,7 +45,13 @@ echo "    $ORACLE_DB_IMAGE_NAME"
 echo "    $EVILAPE_SQLCL_IMAGE_NAME"
 echo "    $EVILAPE_ORDS_IMAGE_NAME"
 echo "    $EVILAPE_DB_IMAGE_NAME"
-
+echo
+echo '  Volumes:'
+echo "    $DB_VOLUME"
+echo "    $ORDS_VOLUME"
+echo
+echo 'NOTE: The volumes will not be removed by the script, you will be asked to do that if you want to remove database files and ORDS-config'
+echo
 read -p ' Do you want to contine and remove all of the above? (Y/N)' continue_flg
 if [[ $continue_flg != 'Y' ]]; then
   echo 'Aborting removal per user request'
@@ -49,3 +59,85 @@ if [[ $continue_flg != 'Y' ]]; then
 fi
 
 echo 'Removal continues per user request'
+
+docker container rm $ORDS_CONTAINER
+docker container rm $DB_CONTAINER
+
+docker image rm $ORACLE_LINUX_IMAGE
+docker image rm $ORACLE_ORDS_IMAGE
+docker image rm $ORACLE_JRE_IMAGE
+docker image rm $ORACLE_DB_IMAGE
+docker image rm $EVILAPE_SQLCL_IMAGE
+docker image rm $EVILAPE_ORDS_IMAGE
+docker image rm $EVILAPE_DB_IMAGE
+
+docker network rm $NETWORK
+
+if (( 0 == $(docker container ls $ORDS_CONTAINER|wc -l) )); then
+  echo "Container $ORDS_CONTAINER has been removed"
+else
+  echo "Container $ORDS_CONTAINER was not removed. Do it manually."
+fi
+
+if (( 0 == $(docker container ls $DB_CONTAINER|wc -l) )); then
+  echo "Container $DB_CONTAINER has been removed"
+else
+  echo "Container $DB_CONTAINER was not removed. Do it manually."
+fi
+
+if (( 0 == $(docker image ls $ORACLE_LINUX_IMAGE_NAME|wc -l) )); then
+  echo "Image $ORACLE_LINUX_IMAGE_NAME has been removed"
+else
+  echo "Image $ORACLE_LINUX_IMAGE_NAME was not removed. Do it manually."
+fi
+
+if (( 0 == $(docker image ls $ORACLE_ORDS_IMAGE|wc -l) )); then
+  echo "Image $ORACLE_ORDS_IMAGE has been removed"
+else
+  echo "Image $ORACLE_ORDS_IMAGE was not removed. Do it manually."
+fi
+
+if (( 0 == $(docker image ls $ORACLE_JRE_IMAGE|wc -l) )); then
+  echo "Image $ORACLE_JRE_IMAGE has been removed"
+else
+  echo "Image $ORACLE_JRE_IMAGE was not removed. Do it manually."
+fi
+
+if (( 0 == $(docker image ls $ORACLE_DB_IMAGE|wc -l) )); then
+  echo "Image $ORACLE_DB_IMAGE has been removed"
+else
+  echo "Image $ORACLE_DB_IMAGE was not removed. Do it manually."
+fi
+
+if (( 0 == $(docker image ls $EVILAPE_SQLCL_IMAGE|wc -l) )); then
+  echo "Image $EVILAPE_SQLCL_IMAGE has been removed"
+else
+  echo "Image $EVILAPE_SQLCL_IMAGE was not removed. Do it manually."
+fi
+
+if (( 0 == $(docker image ls $EVILAPE_ORDS_IMAGE|wc -l) )); then
+  echo "Image $EVILAPE_ORDS_IMAGE has been removed"
+else
+  echo "Image $EVILAPE_ORDS_IMAGE was not removed. Do it manually."
+fi
+
+if (( 0 == $(docker image ls $EVILAPE_DB_IMAGE|wc -l) )); then
+  echo "Image $EVILAPE_DB_IMAGE has been removed"
+else
+  echo "Image $EVILAPE_DB_IMAGE was not removed. Do it manually."
+fi
+
+if (( 0 == $(docker network ls $NETWORK|wc -l) )); then
+  echo "Network $NETWORK has been removed"
+else
+  echo "Network $NETWORK was not removed. Do it manually."
+fi
+
+echo
+echo 'The volumes for database and ORDS needs to be removed too unless you want to keep those files. You can do it with these commands.'
+echo
+echo "su -c 'rm -rf $ORDS_VOLUME'"
+echo "su -c 'rm -rf $DB_VOLUME'"
+echo
+echo 'Removal is complete. Perform steps recommended above if any. If you want you can then follow the process from the start again.'
+echo
