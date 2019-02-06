@@ -78,13 +78,13 @@ docker image rm $ORACLE_LINUX_IMAGE   > /dev/null 2>&1
 
 docker network rm $NETWORK            > /dev/null 2>&1
 
-if (( 0 == $(docker container ls -a --format {{.Image}} $ORDS_CONTAINER|wc -l) )); then
+if (( 0 == $(docker container ls -a --format {{.Image}} -f NAME=$ORDS_CONTAINER|wc -l) )); then
   echo "Container $ORDS_CONTAINER has been removed"
 else
   echo "Container $ORDS_CONTAINER was not removed. Do it manually."
 fi
 
-if (( 0 == $(docker container ls -a --format {{.Image}} $DB_CONTAINER|wc -l) )); then
+if (( 0 == $(docker container ls -a --format {{.Image}} -f NAME=$DB_CONTAINER|wc -l) )); then
   echo "Container $DB_CONTAINER has been removed"
 else
   echo "Container $DB_CONTAINER was not removed. Do it manually."
