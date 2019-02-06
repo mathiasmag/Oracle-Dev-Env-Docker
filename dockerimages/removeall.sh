@@ -50,7 +50,9 @@ echo '  Volumes:'
 echo "    $DB_VOLUME"
 echo "    $ORDS_VOLUME"
 echo
-echo 'NOTE: The volumes will not be removed by the script, you will be asked to do that if you want to remove database files and ORDS-config'
+echo 'NOTE: The volumes will not be removed by the script, you will'
+echo '      be asked to do that if you want to remove database files'
+echo '      and ORDS-config'
 echo
 read -p 'Do you want to contine and remove all of the above? (Y/N) ' continue_flg
 if [[ $continue_flg != 'Y' ]]; then
@@ -93,43 +95,43 @@ else
   echo "Image $ORACLE_LINUX_IMAGE_NAME was not removed. Do it manually."
 fi
 
-if (( 0 == $(docker image ls $ORACLE_ORDS_IMAGE|wc -l) )); then
-  echo "Image $ORACLE_ORDS_IMAGE has been removed"
+if (( 0 == $(docker image ls $ORACLE_ORDS_IMAGE_NAME|wc -l) )); then
+  echo "Image $ORACLE_ORDS_IMAGE_NAME has been removed"
 else
-  echo "Image $ORACLE_ORDS_IMAGE was not removed. Do it manually."
+  echo "Image $ORACLE_ORDS_IMAGE_NAME was not removed. Do it manually."
 fi
 
-if (( 0 == $(docker image ls $ORACLE_JRE_IMAGE|wc -l) )); then
-  echo "Image $ORACLE_JRE_IMAGE has been removed"
+if (( 0 == $(docker image ls $ORACLE_JRE_IMAGE_NAME|wc -l) )); then
+  echo "Image $ORACLE_JRE_IMAGE_NAME has been removed"
 else
-  echo "Image $ORACLE_JRE_IMAGE was not removed. Do it manually."
+  echo "Image $ORACLE_JRE_IMAGE_NAME was not removed. Do it manually."
 fi
 
-if (( 0 == $(docker image ls $ORACLE_DB_IMAGE|wc -l) )); then
-  echo "Image $ORACLE_DB_IMAGE has been removed"
+if (( 0 == $(docker image ls $ORACLE_DB_IMAGE_NAME|wc -l) )); then
+  echo "Image $ORACLE_DB_IMAGE_NAME has been removed"
 else
-  echo "Image $ORACLE_DB_IMAGE was not removed. Do it manually."
+  echo "Image $ORACLE_DB_IMAGE_NAME was not removed. Do it manually."
 fi
 
-if (( 0 == $(docker image ls $EVILAPE_SQLCL_IMAGE|wc -l) )); then
-  echo "Image $EVILAPE_SQLCL_IMAGE has been removed"
+if (( 0 == $(docker image ls $EVILAPE_SQLCL_IMAGE_NAME|wc -l) )); then
+  echo "Image $EVILAPE_SQLCL_IMAGE_NAME has been removed"
 else
-  echo "Image $EVILAPE_SQLCL_IMAGE was not removed. Do it manually."
+  echo "Image $EVILAPE_SQLCL_IMAGE_NAME was not removed. Do it manually."
 fi
 
-if (( 0 == $(docker image ls $EVILAPE_ORDS_IMAGE|wc -l) )); then
-  echo "Image $EVILAPE_ORDS_IMAGE has been removed"
+if (( 0 == $(docker image ls $EVILAPE_ORDS_IMAGE_NAME|wc -l) )); then
+  echo "Image $EVILAPE_ORDS_IMAGE_NAME has been removed"
 else
-  echo "Image $EVILAPE_ORDS_IMAGE was not removed. Do it manually."
+  echo "Image $EVILAPE_ORDS_IMAGE_NAME was not removed. Do it manually."
 fi
 
-if (( 0 == $(docker image ls $EVILAPE_DB_IMAGE|wc -l) )); then
-  echo "Image $EVILAPE_DB_IMAGE has been removed"
+if (( 0 == $(docker image ls $EVILAPE_DB_IMAGE_NAME|wc -l) )); then
+  echo "Image $EVILAPE_DB_IMAGE_NAME has been removed"
 else
-  echo "Image $EVILAPE_DB_IMAGE was not removed. Do it manually."
+  echo "Image $EVILAPE_DB_IMAGE_NAME was not removed. Do it manually."
 fi
 
-if (( 0 == $(docker network ls $NETWORK|wc -l) )); then
+if (( 0 == $(docker network ls --filter name=$NETWORK|wc -l) )); then
   echo "Network $NETWORK has been removed"
 else
   echo "Network $NETWORK was not removed. Do it manually."
