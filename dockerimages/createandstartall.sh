@@ -103,7 +103,7 @@ echo 'Waiting for ORDS creation to complete...'
 
 while true ; do
   sleep 5
-  grep 'Successfully tagged evilape/sqlcl' $SCRIPT_DIR/createandstartall.log
+  grep ':INFO:oejs.Server:main: Started @' $SCRIPT_DIR/createandstartall.log
   if (( $? == 0 )) ; then
     break
   fi
