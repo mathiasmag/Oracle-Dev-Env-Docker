@@ -4,8 +4,8 @@ if (( 1 < $(docker container ls --filter NAME=OracleOrds --format "{{.Names}}" |
   exit
 fi
 
-ORDS_CONTAINER=$(docker container ls --filter NAME=OracleOrds --format "{{.Names}}")
-DB_CONTAINER=$(docker container ls --filter NAME=OracleXE18c --format "{{.Names}}")
+ORDS_CONTAINER=$(docker container ls -a --filter NAME=OracleOrds --format "{{.Names}}")
+DB_CONTAINER=$(docker container ls -a --filter NAME=OracleXE18c --format "{{.Names}}")
 
 NETWORK=$(docker container inspect $ORDS_CONTAINER|grep NetworkMode|cut -f2 -d:|cut -f2 -d\")
 
