@@ -47,9 +47,9 @@ RUN echo "START" && \
     rm /tmp/apex_*.zip  && \
     echo "Next command: mv /opt/oracle/scripts/setup/01_install_apex.sql $APEX_HOME/apex" && \
     mv /opt/oracle/scripts/setup//01_install_apex.sql $APEX_HOME/apex && \
-    echo "Next command: mv /opt/oracle/scripts/setup/05_install_apex.sql $APEX_HOME/apex" && \
-    mv /opt/oracle/scripts/setup/04_apex_rest_config.sql $APEX_HOME/apex && \
+    echo "Next command: mv /opt/oracle/scripts/setup/05_apex_rest_config.sql $APEX_HOME/apex" && \
+    mv /opt/oracle/scripts/setup/05_apex_rest_config.sql $APEX_HOME/apex && \
     echo "DONE"
-#Entrypoint and cmd should not be set as we're extending the Oracle XE image and it has it set to aht it should be
+#Entrypoint and cmd should not be set as we're extending the Oracle XE image and it has it set to what it should be
 #ENTRYPOINT ["/opt/oracle/product/sqlcl/bin/sql"]
 #CMD ["-h"]mathias
