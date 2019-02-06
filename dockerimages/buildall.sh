@@ -12,7 +12,6 @@ if [ ! -x "$(getenforce)" ]; then
   fi
  fi
 
-
 SCRIPT_DIR=$(pwd)
 ORA_IMAGES_DIR=$1
 

@@ -71,7 +71,7 @@ echo 'Waiting for database creation to complete...'
 
 while true ; do
   sleep 5
-  grep 'DATABASE IS READY TO USE!' $SCRIPT_DIR/createandstartall.log
+  grep 'DATABASE IS READY TO USE!' $SCRIPT_DIR/createandstartall.log > /dev/null
   if (( $? == 0 )) ; then
     break
   fi
@@ -103,7 +103,7 @@ echo 'Waiting for ORDS creation to complete...'
 
 while true ; do
   sleep 5
-  grep ':INFO:oejs.Server:main: Started @' $SCRIPT_DIR/createandstartall.log
+  grep ':INFO:oejs.Server:main: Started @' $SCRIPT_DIR/createandstartall.log > /dev/null
   if (( $? == 0 )) ; then
     break
   fi
