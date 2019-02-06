@@ -60,20 +60,20 @@ fi
 
 echo 'Removal continues per user request'
 
-docker container stop $ORDS_CONTAINER > /dev/null
-docker container stop $DB_CONTAINER   > /dev/null
-docker container rm $ORDS_CONTAINER   > /dev/null
-docker container rm $DB_CONTAINER     > /dev/null
+docker container stop $ORDS_CONTAINER > /dev/null 2>&1
+docker container stop $DB_CONTAINER   > /dev/null 2>&1
+docker container rm $ORDS_CONTAINER   > /dev/null 2>&1
+docker container rm $DB_CONTAINER     > /dev/null 2>&1
 
-docker image rm $EVILAPE_SQLCL_IMAGE  > /dev/null
-docker image rm $EVILAPE_ORDS_IMAGE   > /dev/null
-docker image rm $EVILAPE_DB_IMAGE     > /dev/null
-docker image rm $ORACLE_ORDS_IMAGE    > /dev/null
-docker image rm $ORACLE_JRE_IMAGE     > /dev/null
-docker image rm $ORACLE_DB_IMAGE      > /dev/null
-docker image rm $ORACLE_LINUX_IMAGE   > /dev/null
+docker image rm $EVILAPE_SQLCL_IMAGE  > /dev/null 2>&1
+docker image rm $EVILAPE_ORDS_IMAGE   > /dev/null 2>&1
+docker image rm $EVILAPE_DB_IMAGE     > /dev/null 2>&1
+docker image rm $ORACLE_ORDS_IMAGE    > /dev/null 2>&1
+docker image rm $ORACLE_JRE_IMAGE     > /dev/null 2>&1
+docker image rm $ORACLE_DB_IMAGE      > /dev/null 2>&1
+docker image rm $ORACLE_LINUX_IMAGE   > /dev/null 2>&1
 
-docker network rm $NETWORK            > /dev/null
+docker network rm $NETWORK            > /dev/null 2>&1
 
 if (( 0 == $(docker container ls $ORDS_CONTAINER|wc -l) )); then
   echo "Container $ORDS_CONTAINER has been removed"

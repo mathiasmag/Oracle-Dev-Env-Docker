@@ -97,13 +97,13 @@ docker run --name OracleOrds${VER_SUFFIX} \
            -e ORACLE_PWD=$PASSWORD \
            -e ORDS_PWD=$PASSWORD \
            -v $ORDS_VOLUME:/opt/oracle/ords/config/ords \
-           evilape/ords:${RET_VER}-w_images > $SCRIPT_DIR/createandstartall.log &
+           evilape/ords:${RET_VER}-w_images >> $SCRIPT_DIR/createandstartall.log 2>&1 &
 
 echo 'Waiting for ORDS creation to complete...'
 
 while true ; do
   sleep 5
-  grep 'INFO:oejs.Server:main: Started' $SCRIPT_DIR/createandstartall.log
+  grep 'Successfully tagged evilape/sqlcl' $SCRIPT_DIR/createandstartall.log
   if (( $? == 0 )) ; then
     break
   fi
