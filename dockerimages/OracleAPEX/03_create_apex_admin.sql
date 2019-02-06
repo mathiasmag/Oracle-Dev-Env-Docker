@@ -1,5 +1,5 @@
 alter session set container=XEPDB1;
---from Tim Hall - https://oracle-base.com/articles/misc/oracle-application-express-apex-5-0-installation
+-- Based on Tim Hall - https://oracle-base.com/articles/misc/oracle-application-express-apex-5-0-installation
 BEGIN
     APEX_UTIL.set_security_group_id( 10 );
     
