@@ -1,0 +1,58 @@
+sql() {
+  VERSION=$(docker image ls --format "{{.Tag}}" evilape/ords|sort -r|head -1|cut -f1 -d-)
+  NETWORK=$(docker container inspect OracleXE18c|grep NetworkMode|cut -f2 -d:|cut -f2 -d\")
+  CDFILE='.sqlcl_cd_cmd.sqlcl'
+  PASSWORD='$$$$$$$$'
+  LOGIN=''
+
+  IFS='_' read -r CMD SVC USR <<<"${FUNCNAME[(($FUNCNEST + 1))]}"
+  USR=${USR^^}
+  SVC=${SVC^^}
+
+  #If no service, then default to the CDB
+  if [[ $SVC = "" ]]; then
+    SVC='XE'
+  fi
+
+  #If this function is called directly, then USR is empty
+  #If no user then let the user is defaulted to SYS and the user is prompted for PASSWORD. 
+  #If no password (by setting it to nothing in this file) then let the userA be prompted for it
+  #If user and password then let the user be logiedin with no prompt for user or password
+  if [[ $USR == "" ]]; then
+    USR='SYS'
+  fi
+
+  if [[ $PASSWORD = "" ]]; then
+    LOGIN=${USR}
+  else
+    LOGIN="${USR}/${PASSWORD}"
+  fi
+
+  if [[ $USR == "SYS" ]]; then
+    SVC="$SVC as sysdba"
+  fi
+
+  cat << EOF > $CDFILE
+cd /source
+EOF
+
+  if (( $# == 0 )); then
+    docker run --rm --network=${NETWORK} -v $(pwd):/source -it evilape/sqlcl:${VERSION} ${LOGIN}@//OracleXE18c:1521/${SVC} @/source/$CDFILE
+  else
+    echo 'parameters'
+  fi
+#  docker run --rm --network=oracle_isolated_network -v $(pwd):/source evilape/sqlcl:${VERSION} sys/EvilApe@//OracleXE18c:1521/XE as sysdba @/source/$*
+rm $CDFILE
+}
+
+sql_xe_sys() {
+sql
+}
+
+sql_xe_system() {
+sql
+}
+
+sql_xepdb1_pdbadmin() {
+sql
+}
