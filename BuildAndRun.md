@@ -118,12 +118,99 @@ The simple version of it would be something like this:
 sql() {
   docker run --rm --network=<network name> -v $(pwd):/source evilape/sqlcl:<version> sys/<your password>@//OracleXE18c:1521/XE as sysdba @/source/$*
 }
+```
 
 Put it in a file and source it. Now you can say "sql test" to run the test.sql provided you've changed the things in <>. You could easily make it be for interactive use or have another function for it. However, it would be nicer to have a little bit more support.
 
 There is a file called sql_alias.template in the OracleSqlcl subdirectory. We can use this to create a file for functions that do what you need.
 
 To use the same password for all accounts you log in with (CDB and PDB) you run this command:
+```
+sed 's/\$\$\$\$\$\$\$\$/<your password>/' sql_alias.template > sql_alias
+```
 
+To be prompted for all accounts you log in with (CDB and PDB) you run this command:
+```
 sed 's/\$\$\$\$\$\$\$\$//' sql_alias.template > sql_alias
-sed 's/\$\$\$\$\$\$\$\$/EvilApe/' sql_alias.template > sql_alias
+```
+
+Now all you need to do is to source the sql_alias file.
+
+With this you can test four different commands to see it work in interactive mode:
+```
+sql
+sql_xe_sys
+sql_xe_system
+sql_xepdb1_pdbadmin
+```
+If you set up the file with a password you get logged in to a SQL prompt, if not, you will first be prompted for the password by SQLcl.
+
+You can also use them to have it run a file. there is a "test.sql" in the same directory so to run it with one of those users issue, issue one or all of these:
+```
+sql test
+sql_xe_sys test
+sql_xe_system test
+sql_xepdb1_pdbadmin test
+```
+The command "sql" and "sql_xe_sys" does the same exact thing. The latter is more declarative in what it does.
+
+The structure here is sql is just the reference to the base function. the second node "xe/xepdb1" references the "database". It is the service defined. Either CDB or PDB. The last one "sys/system/pdbadmin" is the user to log in as.
+
+The only function with any logic is "sql". The rest are just names that calls the "sql" function which checks which of these the user called and uses the parts as explained.
+
+If you create a new user in the PDB like so:
+```
+$ sql_xe_system
+alter session set container=xepdb1;
+create user testuser identified by EvilApe;
+grant create session to testuser;
+exit
+```
+Here the password "EvilApe" is what is used by all users if we're logging in without being prompted for a password.
+
+Now you can set up your own "alias" for it. Create a file for it. F.e. sql_alias_custom
+place one line in it conataining this:
+```
+sql_xepdb1_testuser() { sql $*; }
+```
+Now you can log in by just issuing "sql_xepdb1_testuser".
+
+With this setup there need to maintain TNS-aliases or have oracle drivers. You can of course, if you prefer, modify the "sql" function to accept parameters.
+
+Do move sql_alias and sql_alias_custom (or what you named that file) to your own directory so it is not lost if you remove and reinstall this development environment in the future.
+
+#### SQL Developer
+
+There really is nothing special with setting up connections in SQL developer to access the database.
+- Give the connection a name like local_xe_sys
+- Username sys
+- Password what you choosed - EvilApe in the examples
+- Connection Type Basic
+- Role SYSDBA for SYS, typically default for other users
+- Hostname localhost
+- Port 1521 or if you chosed to map a different port from your system to the container
+- Service Name XE. XE for the CDB (SYS/SYSTEM) and XEPDB1 for the PDB (PDBADMIN)
+
+That is it, you can now conect.
+
+#### APEX Development environment
+
+You have a full Oracle Rest Data Service configured, The APEX environment us unlocked and ready to go.
+
+For administering the environment, including creating workspace and developer user start with
+- http://localhost:8888/ords/apex_admin
+
+Then to log on to the development environment head over to:
+- http://localhost:8888/ords/apex_admin
+
+You log in to the admin with user ADMIN and the password you selected to use for all users (EvilApe in the examples)
+
+In the developoment environment you log into the workspace you created with the user you created.
+
+## You are good to go
+
+Assuming everyhing above worked for you, you are now able to work with your local database development environment and extend as you wish. Create new pluggable databases, set up more things in ORDS, play with REST and so forth. Modifying REST configuration is done in the ORDS-volume where the configuration files are located. To get REST fully functional you may need to unlock some users, I leave testing that to the reader.
+
+## Leave Feedback
+
+Please drop me a note if you find this useful or if something was confusing or flat out wrong.
