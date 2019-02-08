@@ -191,6 +191,8 @@ There really is nothing special with setting up connections in SQL developer to 
 - Port 1521 or if you chosed to map a different port from your system to the container
 - Service Name XE. XE for the CDB (SYS/SYSTEM) and XEPDB1 for the PDB (PDBADMIN)
 
+NOTE: Use service name for both CDB and PDB, it makes life easier to not refer directly to SID anymore.
+
 That is it, you can now conect.
 
 #### APEX Development environment
@@ -206,6 +208,13 @@ Then to log on to the development environment head over to:
 You log in to the admin with user ADMIN and the password you selected to use for all users (EvilApe in the examples)
 
 In the developoment environment you log into the workspace you created with the user you created.
+
+#### Oracle Enterprise Manager Express
+
+OEM Express is configured on this address:
+- https://localhost:5500/em/
+
+This is however currently failing on a certificate issue. Probably due to the linux used as based for the ORDS-install. 
 
 ## You are good to go
 
