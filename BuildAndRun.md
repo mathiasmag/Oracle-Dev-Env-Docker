@@ -124,3 +124,6 @@ Put it in a file and source it. Now you can say "sql test" to run the test.sql p
 There is a file called sql_alias.template in the OracleSqlcl subdirectory. We can use this to create a file for functions that do what you need.
 
 To use the same password for all accounts you log in with (CDB and PDB) you run this command:
+
+sed 's/\$\$\$\$\$\$\$\$//' sql_alias.template > sql_alias
+sed 's/\$\$\$\$\$\$\$\$/EvilApe/' sql_alias.template > sql_alias

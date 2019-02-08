@@ -1,7 +1,7 @@
 sql() {
   VERSION=$(docker image ls --format "{{.Tag}}" evilape/ords|sort -r|head -1|cut -f1 -d-)
   NETWORK=$(docker container inspect OracleXE18c|grep NetworkMode|cut -f2 -d:|cut -f2 -d\")
-  CDFILE='.sqlcl_cd_cmd.sqlcl'
+  SQLFILE=".sqlcl_cd_cmd.$$"
   PASSWORD='$$$$$$$$'
   LOGIN=''
 
@@ -32,27 +32,24 @@ sql() {
     SVC="$SVC as sysdba"
   fi
 
-  cat << EOF > $CDFILE
+  #If a parameter is sent, then use it in non interactive mode to run the file and arguments provided.
+  if (( $# == 0 )); then
+  cat << EOF > $SQLFILE
 cd /source
 EOF
-
-  if (( $# == 0 )); then
-    docker run --rm --network=${NETWORK} -v $(pwd):/source -it evilape/sqlcl:${VERSION} ${LOGIN}@//OracleXE18c:1521/${SVC} @/source/$CDFILE
   else
-    echo 'parameters'
+  cat << EOF > $SQLFILE
+cd /source
+@$*
+exit
+EOF
   fi
-#  docker run --rm --network=oracle_isolated_network -v $(pwd):/source evilape/sqlcl:${VERSION} sys/EvilApe@//OracleXE18c:1521/XE as sysdba @/source/$*
-rm $CDFILE
+
+docker run --rm --network=${NETWORK} -v $(pwd):/source -it evilape/sqlcl:${VERSION} ${LOGIN}@//OracleXE18c:1521/${SVC} @/source/$SQLFILE
+
+rm $SQLFILE
 }
 
-sql_xe_sys() {
-sql
-}
-
-sql_xe_system() {
-sql
-}
-
-sql_xepdb1_pdbadmin() {
-sql
-}
+sql_xe_sys()          { sql $*; }
+sql_xe_system()       { sql $*; }
+sql_xepdb1_pdbadmin() { sql $*; }
