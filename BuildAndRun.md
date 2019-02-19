@@ -216,6 +216,8 @@ OEM Express is configured on this address:
 
 This is however currently failing on a certificate issue. Probably due to the linux used as based for the ORDS-install. 
 
+Possibly solved by: https://linux.oracle.com/uln_faq.html
+
 ## You are good to go
 
 Assuming everyhing above worked for you, you are now able to work with your local database development environment and extend as you wish. Create new pluggable databases, set up more things in ORDS, play with REST and so forth. Modifying REST configuration is done in the ORDS-volume where the configuration files are located. To get REST fully functional you may need to unlock some users, I leave testing that to the reader.

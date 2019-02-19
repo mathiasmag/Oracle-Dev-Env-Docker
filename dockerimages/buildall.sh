@@ -26,12 +26,12 @@ if (( 0 == $(ls apex_*.zip 2>/dev/null | wc -w) )); then
 fi
 
 if (( 0 == $(ls server-jre-8u*-linux-x64.tar.gz 2>/dev/null | wc -w) )); then
-  echo 'The Oracle Java JRE 8 installation zip-file needs to be present and located in the same directory as this script.'
+  echo 'The Oracle Java JRE 8 installation gzip-file needs to be present and located in the same directory as this script.'
   exit
 fi
 
 if (( 0 == $(ls ords-18*.zip 2>/dev/null | wc -w) )); then
-  echo 'The Oracle Java JRE 8 installation zip-file needs to be present and located in the same directory as this script.'
+  echo 'The Oracle ORDS installation zip-file needs to be present and located in the same directory as this script.'
   exit
 fi
 
