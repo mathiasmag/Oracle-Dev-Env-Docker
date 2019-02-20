@@ -33,6 +33,8 @@ ENV APEX_HOME=/opt/oracle/product
 COPY apex_*.zip /tmp
 COPY 0* /opt/oracle/scripts/setup/
 RUN echo "START" && \
+    echo "Remove line restricting use of su from PAM" && \
+    sed -i /session.*include.*system-auth/d /etc/pam.d/su \
     echo "Next command: yum -y install unzip" && \
     yum -y install unzip && \
     echo "Next command: mkdir -p $APEX_HOME" && \

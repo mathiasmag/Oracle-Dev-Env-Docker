@@ -22,6 +22,11 @@ WARNING: bridge-nf-call-ip6tables is disabled
 ```
 ## Execute the script to create and start the containers
 
+Create a directory to hold docker volumes, that is file sthat are stored outside of the containers. Specifically, here it is used for database files and for the ORDS-config. It has to be writeable by user 54321 that is the oracle user in the containers. 
+For example.
+- $ mkdir ~/dkr_volumes
+- $ chmod 777 ~/devenv/dkr_volumes
+
 In the same directory where you put the zip-files, there is a script createandstartall.sh. It takes the needed parameters for creating starting the containers.
 
 Parameters:
