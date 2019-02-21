@@ -25,7 +25,6 @@ WARNING: bridge-nf-call-ip6tables is disabled
 Create a directory to hold docker volumes, that is file sthat are stored outside of the containers. Specifically, here it is used for database files and for the ORDS-config. It has to be writeable by user 54321 that is the oracle user in the containers. 
 For example.
 - $ mkdir ~/dkr_volumes
-- $ chmod 777 ~/devenv/dkr_volumes
 
 In the same directory where you put the zip-files, there is a script createandstartall.sh. It takes the needed parameters for creating starting the containers.
 
@@ -94,8 +93,9 @@ Still, why use SQL*PLUS at all when SQLcl exists?
 #### SQLcl in interactive mode
 
 If you want a SQL prompt to do some database work, use this command:
-- $ docker run --rm --network=<network name> -it evilape/sqlcl:18.4.0 sys/<your password>@//OracleXE18c:1521/XE as sysdba
-
+´´´
+docker run --rm --network=<network name> -it evilape/sqlcl:18.4.0 sys/<your password>@//OracleXE18c:1521/XE as sysdba
+´´´
 NOTE: You may need to change 18.4.0 to a different version if you have installed another version of SQLcl.
 
 You get logged in and can do your work. When you exit the container is removed so you can just run again. Just like normal.
@@ -108,7 +108,8 @@ If you have your SQL in a file on your system and just want to run it in the dat
 
 For example, to run the test.sql located in the OracleSqlcl subdirectory, navigate to that directory and run this command
 ```
-docker run --rm --network=<network name> -v $(pwd):/source evilape/sqlcl:18.4.0 sys/<your password>@//OracleXE18c:1521/XE as sysdba @/source/test.sql
+docker run --rm --network=<network name> -v $(pwd):/source evilape/sqlcl:18.4.0 \
+       sys/<your password>@//OracleXE18c:1521/XE as sysdba @/source/test.sql
 ```
 NOTE: You may need to change 18.4.0 to a different version if you have installed another version of SQLcl.
 
@@ -220,8 +221,6 @@ OEM Express is configured on this address:
 - https://localhost:5500/em/
 
 This is however currently failing on a certificate issue. Probably due to the linux used as based for the ORDS-install. 
-
-Possibly solved by: https://linux.oracle.com/uln_faq.html
 
 ## You are good to go
 

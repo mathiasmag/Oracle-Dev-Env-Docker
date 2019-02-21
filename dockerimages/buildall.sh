@@ -121,4 +121,4 @@ if [ $(docker image ls -q evilape/sqlcl:${RET_VER} | wc -l) == '0' ]; then
     exit
 fi
 
-echo 'All Images has been built. Use script buildall.sh to create and start containers.'
+echo 'All Images has been built. Use script createandstartall.sh to create and start containers.'
