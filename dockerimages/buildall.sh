@@ -51,7 +51,7 @@ cp sqlcl-19*.zip OracleSqlcl
 
 echo 'Build oracle/database:18.4.0-xe'
 
-# Build the Oracle XE 18.4.0 image
+# Build the Oracle XE 19.2.0 image
 cd $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles
 ./buildDockerImage.sh -x -v 18.4.0 > $SCRIPT_DIR/buildall.log
 

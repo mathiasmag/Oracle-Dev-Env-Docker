@@ -42,7 +42,7 @@ I recommend putting the files in  software repository directory, I use ~/devenv_
 Assuming this downloads into ~/Downloads, this command can be used to move to the receommended software repository directory.
 ````
 cd ~/Downloads
-mv apex_19.2_en.zip sqlcl-19.*.zip server-jre-8u241-linux-x64.tar ords-19.2.*.zip ~/devenv_src
+mv apex_19.2_en.zip sqlcl-19.*.zip server-jre-8u241-linux-x64.tar.gz ords-19.2.*.zip ~/devenv_src
 
 ## Build and run 
 Follow the [next](BuildAndRun.md) document to build the images and create the containers.
