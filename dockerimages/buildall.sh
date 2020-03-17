@@ -7,7 +7,8 @@ if [ ! -d "${ORA_IMAGES_DIR}/docker-images-master" ]; then
   exit
 fi
 
-if [ ! -x "$(getenforce)" ]; then
+#If SELINUX is installed
+if [ $(which getenforce) ]; then
   if [ $(getenforce) == 'Enforcing' ]; then
     echo 'SELINUX is active. Disable it temporarily with "setenforce Permissive".'
     echo 'Edit /etc/selinux/config to change its setting. Or configure it to work with Oracle. Your choice...'
