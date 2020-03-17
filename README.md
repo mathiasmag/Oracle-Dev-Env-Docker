@@ -2,9 +2,9 @@
 
 This repo sets up an Oracle development environment using:
 - Oracle DB XE 18c
-- APEX 18.2
-- ORDS 18.3
-- SQL CL 18.3
+- APEX 19.2
+- ORDS 19.2
+- SQL CL 19.4
 
 It is based around the Oracle Docker works when possible and then extended to make it work.
 
@@ -12,6 +12,6 @@ In short the Oracle database is built using Oracles setup for a docker image for
 
 After running exactly as defined, the following ports are active:
 - 1521 - Database listener - sql-access on localhost:1521
-- 8888 - Rest DAta port, including apex access on loclahost:8888/apex
+- 8888 - Rest Data port, including apex access on loclahost:8888/apex
 
 Start by completeing the prerequisites for creating the development environment:

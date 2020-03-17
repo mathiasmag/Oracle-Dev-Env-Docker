@@ -1,20 +1,24 @@
 # Build and run the images
 Now that the pre-requisites has been completed, we just need to build the images and then start the containers.
 
+## Move downloaded files to where we need them
+The utility to build this expects the downloaded files to be placed in .../devenv/evilape/Oracle-Dev-Env-Docker-master/dockerimages. This plce was created when we ran the commands to download the docker-projects.
+
+```
+cp ~/devenv_src/* ~/devenv/evilape/Oracle-Dev-Env-Docker-master/dockerimages
+```
+That assumes you have created both devenv nd devenv_src in your homedirectory, if not adjust as needed.
+
 ## Execute the script to build the images
 
 In the same directory where you put the zip-files, there is a script buildall.sh. It builds all images needed for the dev elopment environment.
 
-Parameters:
-- Position 1 - Location of the base directory for the oracle docker project.
-
 for example:
-- $ ./buildall.sh ~/ora_dkr
-(assuming you created ora_dkr and unzipped the Oracle Docker project in there.)
+- $ ./buildall.sh
 
 NOTE: It writes all standard output to buildall.log. It only shows each steps it starts as output to the user. Tail that file if you want to follow how the process goes.
 
-Warnings and errors written to standard error shown up. There should be none. With known exception of these that shows up twice.
+Warnings and errors written to standard error shown up. There should be none. With the known exception of these that may show up twice.
 
 ```
 WARNING: bridge-nf-call-iptables is disabled
