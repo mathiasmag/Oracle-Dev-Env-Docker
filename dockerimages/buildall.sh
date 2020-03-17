@@ -1,6 +1,9 @@
-#!/usr/bin/sh
-if [ ! -d "$1/docker-images-master" ]; then
-  echo 'Parameter 1 needs to be the directory where the oracle docker files were unzipped.'
+#!/bin/sh
+SCRIPT_DIR=$(pwd)
+ORA_IMAGES_DIR="../../../oracle"
+
+if [ ! -d "${ORA_IMAGES_MASTER}/docker-images-master" ]; then
+  echo "Oracle docker files not found at: ${ORA_IMAGES_MASTER}/docker-images-master"
   exit
 fi
 
@@ -11,9 +14,6 @@ if [ ! -x "$(getenforce)" ]; then
     exit
   fi
  fi
-
-SCRIPT_DIR=$(pwd)
-ORA_IMAGES_DIR=$1
 
 if [ ! -f "oracle-database-xe-18c-1.0-1.x86_64.rpm" ]; then
   echo 'The Oracle installation file for XE (oracle-database-xe-18c-1.0-1.x86_64.rpm) needs to be present and located in the same directory as this script.'
@@ -30,12 +30,12 @@ if (( 0 == $(ls server-jre-8u*-linux-x64.tar.gz 2>/dev/null | wc -w) )); then
   exit
 fi
 
-if (( 0 == $(ls ords-18*.zip 2>/dev/null | wc -w) )); then
+if (( 0 == $(ls ords-19*.zip 2>/dev/null | wc -w) )); then
   echo 'The Oracle ORDS installation zip-file needs to be present and located in the same directory as this script.'
   exit
 fi
 
-if (( 0 == $(ls sqlcl-18*.zip 2>/dev/null | wc -w) )); then
+if (( 0 == $(ls sqlcl-19*.zip 2>/dev/null | wc -w) )); then
   echo 'The Oracle SQLcl installation zip-file needs to be present and located in the same directory as this script.'
   exit
 fi
@@ -45,8 +45,8 @@ cp oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/
 cp apex_*.zip OracleAPEX
 cp apex_*.zip OracleOrds
 cp server-jre-8u*-linux-x64.tar.gz $ORA_IMAGES_DIR/docker-images-master/OracleJava/java-8
-cp ords-18*.zip  $ORA_IMAGES_DIR/docker-images-master/OracleRestDataServices/dockerfiles
-cp sqlcl-18*.zip OracleSqlcl
+cp ords-19*.zip  $ORA_IMAGES_DIR/docker-images-master/OracleRestDataServices/dockerfiles
+cp sqlcl-19*.zip OracleSqlcl
 
 echo 'Build oracle/database:18.4.0-xe'
 
