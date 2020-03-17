@@ -2,8 +2,8 @@
 SCRIPT_DIR=$(pwd)
 ORA_IMAGES_DIR="../../../oracle"
 
-if [ ! -d "${ORA_IMAGES_MASTER}/docker-images-master" ]; then
-  echo "Oracle docker files not found at: ${ORA_IMAGES_MASTER}/docker-images-master"
+if [ ! -d "${ORA_IMAGES_DIR}/docker-images-master" ]; then
+  echo "Oracle docker files not found at: ${ORA_IMAGES_DIR}/docker-images-master"
   exit
 fi
 
