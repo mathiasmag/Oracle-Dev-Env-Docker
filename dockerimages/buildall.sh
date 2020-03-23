@@ -16,11 +16,6 @@ if [ $(which getenforce) ]; then
   fi
  fi
 
-if [ ! -f "oracle-database-xe-18c-1.0-1.x86_64.rpm" ]; then
-  echo 'The Oracle installation file for XE (oracle-database-xe-18c-1.0-1.x86_64.rpm) needs to be present and located in the same directory as this script.'
-  exit
-fi
-
 if (( 0 == $(ls apex_*.zip 2>/dev/null | wc -w) )); then
   echo 'The Oracle APEX installation zip-file needs to be present and located in the same directory as this script.'
   exit
@@ -42,7 +37,6 @@ if (( 0 == $(ls sqlcl-19*.zip 2>/dev/null | wc -w) )); then
 fi
 
 echo 'Copying files'
-cp oracle-database-xe-18c-1.0-1.x86_64.rpm $ORA_IMAGES_DIR/docker-images-master/OracleDatabase/SingleInstance/dockerfiles/18.4.0/
 cp apex_*.zip OracleAPEX
 cp apex_*.zip OracleOrds
 cp server-jre-8u*-linux-x64.tar.gz $ORA_IMAGES_DIR/docker-images-master/OracleJava/java-8
@@ -67,7 +61,7 @@ cd $SCRIPT_DIR/OracleAPEX
 docker build -t evilape/database:18.4.0-xe_w_apex -f Dockerfile . >> $SCRIPT_DIR/buildall.log
 
 if [ $(docker image ls -q evilape/database:18.4.0-xe_w_apex | wc -l) == '0' ]; then
-    echo 'The build of Oracle XE did not succeed. Exiting.'
+    echo 'The build of Oracle XE with APEX did not succeed. Exiting.'
     exit
 fi
 

@@ -12,7 +12,7 @@ Oracle Linux install for docker-engine is explained on this [blog](https://blogs
 
 ## Get zip-files for this project and Oracle Docker project.
 
-Either use these commands to download and unzip into the directory you execute them from or follow the steps below to do it manually.
+Either use these commands to download and unzip into the directory you execute them from or follow the steps below to do it 1manually.
 ```
 cd
 mkdir devenv
@@ -33,7 +33,6 @@ Grab the latest version/update for each file within the version indicated below.
 
 I recommend putting the files in  software repository directory, I use ~/devenv_src below. This is not required, but makes it easier if you want to rerun the setup at some point.
 
-- [Oracle XE 18c - Linux x64](curl -Lk https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm --output ~/devenv_src/oracle-database-xe-18c-1.0-1.x86_64.rpm)
 - [Oracle APEX 19.2](https://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html)
 - [Oracle SQLcl 19.4](https://www.oracle.com/technetwork/developer-tools/sqlcl/downloads/index.html)
 - [Java Version 8u241 - server-jre-8u<nnn>-linux-x64.tar.gz](https://www.oracle.com/java/technologies/javase-server-jre8-downloads.html)

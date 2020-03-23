@@ -18,7 +18,7 @@ for example:
 
 NOTE: It writes all standard output to buildall.log. It only shows each steps it starts as output to the user. Tail that file if you want to follow how the process goes.
 
-Warnings and errors written to standard error shown up. There should be none. With the known exception of these that may show up twice.
+Warnings and errors written to standard error shown up. There should be none. With the known exception of these that *may* show up twice.
 
 ```
 WARNING: bridge-nf-call-iptables is disabled
@@ -26,8 +26,8 @@ WARNING: bridge-nf-call-ip6tables is disabled
 ```
 ## Execute the script to create and start the containers
 
-Create a directory to hold docker volumes, that is file sthat are stored outside of the containers. Specifically, here it is used for database files and for the ORDS-config. It has to be writeable by user 54321 that is the oracle user in the containers. 
-For example.
+Create a directory to hold docker volumes, that is files that are stored outside of the containers. Specifically, here it is used for database files and for the ORDS-config. It has to be writeable by user 54321 that is the oracle user in the containers. 
+For example. The script handles it as the base does not need it but the created subdirectories are chmoded to 777.
 - $ mkdir ~/dkr_volumes
 
 In the same directory where you put the zip-files, there is a script createandstartall.sh. It takes the needed parameters for creating starting the containers.
@@ -41,7 +41,7 @@ Parameters:
 - Position 6 - Port to map traffic to ORDS. It is is 8888 inside the container.
 
 For example.
-- $ ./createandstartall.sh oracle_nw ~/dkr_data/ EvilApe 1521 5500 8888
+- $ ./createandstartall.sh oracle_nw ~/dkr_volumes/ EvilApe 1521 5500 8888
 
 It is often easiest to use the same port on your system as is being used in the containers. Unless you want to set up many parallell environments on your system.
 
