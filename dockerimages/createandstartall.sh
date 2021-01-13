@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 junk=$(docker network inspect $1 2>&1 >/dev/null)
 #Create the docker network for the containers unless it already exists
